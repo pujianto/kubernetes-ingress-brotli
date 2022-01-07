@@ -7,4 +7,4 @@ RUN git clone https://github.com/google/ngx_brotli.git && cd ngx_brotli && git s
 RUN curl http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -o nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz --transform s/nginx-${NGINX_VERSION}/nginx/
 RUN cd nginx && ./configure --with-compat --add-dynamic-module=../ngx_brotli && make modules
 FROM nginx/nginx-ingress:${NGINX_INGRESS_VERSION}
-COPY --from=build /build/nginx/objs/ngx_http_brotli_* /usr/lib/nginx/modules/
+COPY --from=build /build/nginx/objs/ngx_http_brotli_*.so /usr/lib/nginx/modules/
