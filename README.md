@@ -1,5 +1,5 @@
 # nginx-ingress-brotli
-Add Brotli Compression to the kubernetes-ingress image
+Add Brotli Compression to the [kubernetes-ingress](https://github.com/nginxinc/kubernetes-ingress) image
 
 
 ## To enable this feature
