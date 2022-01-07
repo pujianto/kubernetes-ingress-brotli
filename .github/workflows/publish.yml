@@ -7,7 +7,7 @@ on:
         required: true
       nginxIngressVersion:
         description: "Nginx Ingress version"
-        required: true 
+        required: true
 
 jobs:
   docker:
@@ -22,12 +22,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Create Dockerfile
+        run: envsubst < Dockerfile-tpl > Dockerfile
+        env:
+          NGINX_VERSION: "${{ inputs.nginxVersion }}"
+          NGINX_INGRESS_VERSION: "${{ inputs.nginxIngressVersion }}"
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: pujianto/nginx-ingress-brotli:${{ github.event.inputs.nginxIngressVersion }}
-          build-args: 
+          build-args:
             NGINX_INGRESS_VERSION=${{ github.event.inputs.nginxIngressVersion }}
             NGINX_VERSION=${{ github.event.inputs.nginxVersion }}

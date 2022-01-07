@@ -1,6 +1,4 @@
 FROM ubuntu:20.04 as build
-ARG NGINX_VERSION=1.21.5
-ARG NGINX_INGRESS_VERSION=2.1.0
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /build
 RUN sed -i /etc/apt/sources.list -e 's/\# deb-src/deb-src/g'
