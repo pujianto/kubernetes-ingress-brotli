@@ -27,8 +27,8 @@ jobs:
       - name: Create Dockerfile
         run: envsubst < Dockerfile-tpl > Dockerfile
         env:
-          NGINX_VERSION: "${{ inputs.nginxVersion }}"
-          NGINX_INGRESS_VERSION: "${{ inputs.nginxIngressVersion }}"
+          NGINX_VERSION: "${{ github.event.inputs.nginxVersion }}"
+          NGINX_INGRESS_VERSION: "${{ github.event.inputs.nginxIngressVersion }}"
 
       - name: Build and push
         id: docker_build
