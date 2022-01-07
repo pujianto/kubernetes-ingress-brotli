@@ -1,0 +1,12 @@
+FROM ubuntu:20.04 as build
+ARG NGINX_VERSION=1.21.5
+ARG NGINX_INGRESS_VERSION=2.1.0
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /build
+RUN sed -i /etc/apt/sources.list -e 's/\# deb-src/deb-src/g'
+RUN apt-get update && apt-get install -y curl git && apt-get build-dep nginx -y 
+RUN git clone https://github.com/google/ngx_brotli.git && cd ngx_brotli && git submodule update --init --recursive
+RUN curl http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -o nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz --transform s/nginx-${NGINX_VERSION}/nginx/
+RUN cd nginx && ./configure --with-compat --add-dynamic-module=../ngx_brotli && make modules
+FROM nginx/nginx-ingress:${NGINX_INGRESS_VERSION}
+COPY --from=build /build/nginx/objs/ngx_http_brotli_* /usr/lib/nginx/modules/
