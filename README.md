@@ -1,3 +1,5 @@
+# UPDATE!
+### It's better to apply the compression on the upstream because it gives us more flexibility, such as doing static compression to the maximum level.
 # nginx-ingress-brotli
 Add Brotli Compression to the [kubernetes-ingress](https://github.com/nginxinc/kubernetes-ingress) image
 
